@@ -1,6 +1,6 @@
 echo "Welcome to Employee Wage Computation"
 
-# Constants
+#Constants
 ABSENT=0
 PRESENT=1
 PART_TIME=2
@@ -12,26 +12,30 @@ PART_TIME_HOURS=4
 
 #VARIABLES
 totalWage=0
+totalWorkingHrs=0
+totalWorkingDays=0
 
-for (( counter=0; counter<$WORKING_DAYS_PER_MONTH; counter++ ))
+while [[ $totalWorkingHrs -lt 100 && $totalWorkingDays -lt 20 ]]
 do
-	isPresent=$(( RANDOM % 3 ))
-
-	case $isPresent in
-		$PRESENT)
-		echo "Present"
-		dailyWage=$(( $WAGE_PER_HOURS * $WORKING_HOURS ))
-		totalWage=$(( $totalWage + $dailyWage ))
-		;;
-		$PART_TIME)
-		echo "Part time"
-		dailyWage=$(( $WAGE_PER_HOURS * $PART_TIME_HOURS ))
-		totalWage=$(( $totalWage + $dailyWage ))
-		;;
-		$ABSENT)
-		echo "Absent"
-		;;
-	esac
+        isPresent=$(( RANDOM % 3 ))
+        ((totalWorkingDays++))
+        case $isPresent in
+                $PRESENT)
+                echo "Present"
+                dailyWage=$(( $WAGE_PER_HOURS * $WORKING_HOURS ))
+                totalWage=$(( $totalWage + $dailyWage ))
+                totalWorkingHrs=$(( $totalWorkingHrs + $WORKING_HOURS ))
+                ;;
+                $PART_TIME)
+                echo "Part time"
+                dailyWage=$(( $WAGE_PER_HOURS * $PART_TIME_HOURS ))
+                totalWage=$(( $totalWage + $dailyWage ))
+                totalWorkingHrs=$(( $totalWorkingHrs + $WORKING_HOURS ))
+                ;;
+                $ABSENT)
+                echo "Absent"
+                ;;
+        esac
 
 done
 
